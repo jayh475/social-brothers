@@ -1,0 +1,129 @@
+/*style the page*/
+.page-container {
+    background: #f4f4f4;
+    display: grid;
+    grid-gap: 2vw;
+    padding: 2vw;
+    grid-template-columns: 50%;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "form aside"
+}
+
+@media (max-width: 400px) {
+    .grid {
+        grid-template-areas:
+      "form aside"
+    }
+}
+
+
+/* Style the header */
+.header-image {
+    width: 100vw;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    max-height: 50vh;
+
+}
+
+/* everything for the  message form*/
+.form-container {
+    grid-area: form;
+    background: white;
+    height: auto;
+    /*width: 40vw;*/
+    padding: 4vw;
+    position: relative;
+
+
+}
+
+/*.form-input .form-select .form-textarea{*/
+/*    width: 100%;*/
+/*    background: #fafafa;*/
+/*    border: none;*/
+/*}*/
+
+.form-input {
+    border: none;
+    width: 100%;
+    background: #fafafa;
+    height: 6vh;
+    margin-bottom: 15px;
+}
+
+.form-label {
+    float: left;
+
+}
+
+.form-select {
+    border: none;
+    width: 100%;
+    background: #fafafa;
+    height: 6vh;
+    margin-bottom: 15px;
+}
+
+.form-textarea {
+    border: none;
+    width: 100%;
+    background: #fafafa;
+    height: 40vh;
+
+
+}
+
+.form-button {
+    color: white;
+    border-radius: 25px;
+    background: #f27623;
+    font-size: 1.3rem;
+
+    padding: 5px 30px 5px 30px;
+    position: relative;
+    border: solid;
+    /*right: 30%;*/
+    /*left: 30%;*/
+    margin:  20px auto auto;
+}
+
+
+
+/*for the messages*/
+.aside-container {
+    grid-area: aside;
+    background: white;
+    height: auto;
+    /*width: 38vw;*/
+    padding: 4vw;
+}
+
+.aside-button {
+    color: white;
+    border-radius: 25px;
+    background: #f27623;
+    font-size: 1.3rem;
+
+    padding: 5px 30px 5px 30px;
+    position: relative;
+    border: solid;
+    /*right: 30%;*/
+    /*left: 30%;*/
+    margin:  20px auto auto;
+}
+
+/*mobile*/
+@media only screen and (max-width:450px) {
+    .page-container {
+        grid-template-columns: 100%;
+        grid-template-rows: auto;
+
+        grid-template-areas:
+      "form"
+        "aside"
+
+    }
+}
