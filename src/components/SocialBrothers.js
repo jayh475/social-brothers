@@ -26,7 +26,6 @@ class SocialBrothers extends React.Component {
             return   item.name === event.target.value
         })
         this.setState({[event.target.name]: value[0].id })
-        console.log(value[0].id)
     }
 
     handleSubmit = () => {
@@ -48,7 +47,6 @@ class SocialBrothers extends React.Component {
             .catch(() =>
                 alert("post doesnt work"))
     }
-
     getPosts = () => {
          const posts = this.state.posts.slice(0,4);
         return posts.map((item, index) => (
@@ -62,8 +60,6 @@ class SocialBrothers extends React.Component {
 
         ));
     };
-
-
     componentDidMount() {//categories
         const headers = {
             headers: {"token": "pj11daaQRz7zUIH56B9Z"}
@@ -77,7 +73,6 @@ class SocialBrothers extends React.Component {
         // articles
         axios.get('http://178.62.198.162/api/posts', headers)
             .then(response => this.setState({posts: response.data}))
-
     }
     render() {
         return (
@@ -85,39 +80,24 @@ class SocialBrothers extends React.Component {
 
                 {/*header*/}
                 <img className='header-image' alt={"foto"} src={image}/>
-
-
                 <div className='page-container'>
-
-                    {/*bericht maken*/}
-                    {/*title*/}
                     <form onSubmit={this.handleSubmit} className='form-container'>
                         <label htmlFor="title" className='form-label'>Berichtnaam</label>
                         <input onChange={this.handleChange} name="title" type='text' className='form-input'/>
-                        {/* category_id*/}
                         <label htmlFor="category_id" className='form-label'>Categorie</label>
-
                         <select onChange={this.handleSelect} name="category_id"
                                 className="form-select">{
                             this.state.categories.map((categorie) =>
                                 <option key={categorie.id}>{categorie.name}</option>
                             )} </select>
-
-                        {/* content*/}
                         <label htmlFor="content" className='form-label'>Bericht</label>
                         <textarea onChange={this.handleChange} name="content" className='form-textarea'/>
 
                         <button className='form-button'>Bericht aanmaken</button>
-
                     </form>
-
-
-
                     {/*articles*/}
                     <aside className='aside-container'>
                         <ul className="list-posts">{this.getPosts()}</ul>
-
-
                         <button className='aside-button'>Meer laden</button>
                     </aside>
                 </div>
@@ -125,5 +105,4 @@ class SocialBrothers extends React.Component {
         );
     }
 }
-
 export default SocialBrothers;
