@@ -16,22 +16,29 @@ class SocialBrothers extends React.Component {
             bericht: ""
         }
     }
+    // changeBerichtnaamHandler = (event) => {
+    //     this.setState({berichtnaam: event.target.value}, ()=>
+    //     console.log(this.state));
+    // }
+    // changeCategorieHandler = (event) => {
+    //     this.setState({categorie: event.target.value})
+    //     //
+    //     console.log(event.target.value);
+    // }
+    // changeBerichtHandler = (event) => {
+    //     this.setState({bericht: event.target.value})
+    //     console.log(this.state.bericht)
+    // }
+    handleSubmit(event) {
+        // Prevent default behavior
+        event.preventDefault();
 
+        const data = new FormData(event.target);
+        // Access FormData fields with `data.get(fieldName)`
+        // For example, converting to upper case
+        data.set('username', data.get('username').toUpperCase());
 
-    changeBerichtnaamHandler = (event) => {
-        this.setState({berichtnaam: event.target.value}, ()=>
-        console.log(this.state));
-
-
-    }
-    changeCategorieHandler = (event) => {
-        this.setState({categorie: event.target.value})
-        //
-        console.log(event.target.value);
-    }
-    changeBerichtHandler = (event) => {
-        this.setState({bericht: event.target.value})
-        console.log(this.state.bericht)
+        // Do your Axios stuff here
     }
 
     componentDidMount() {
@@ -57,8 +64,6 @@ class SocialBrothers extends React.Component {
 
 
     render() {
-
-
         let categories = this.state.categories;
         let optionItems = categories.map((categorie) =>
             <option key={categorie.id}>{categorie.name}</option>
@@ -75,7 +80,7 @@ class SocialBrothers extends React.Component {
                 <div className='page-container'>
 
                     {/*bericht maken*/}
-                    <form className='form-container'>
+                    <form onSubmit={this.handleSubmit()} className='form-container'>
                         <label className='form-label'>Berichtnaam</label>
                         <input type='text' className='form-input' onChange={this.changeBerichtnaamHandler}
                                value={this.state.berichtnaam}/>
