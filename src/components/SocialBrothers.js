@@ -8,45 +8,50 @@ class SocialBrothers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            berichtnaam: "",
-            categorie: '',
-            // clearable: true,
-            categories: [],
             posts: [],
-            bericht: ""
+            categories: [],
+            title: "",
+            content: "",
+            category_id: 1,
         }
     }
-    // changeBerichtnaamHandler = (event) => {
-    //     this.setState({berichtnaam: event.target.value}, ()=>
-    //     console.log(this.state));
-    // }
-    // changeCategorieHandler = (event) => {
-    //     this.setState({categorie: event.target.value})
-    //     //
-    //     console.log(event.target.value);
-    // }
-    // changeBerichtHandler = (event) => {
-    //     this.setState({bericht: event.target.value})
-    //     console.log(this.state.bericht)
-    // }
-    handleSubmit(event) {
-        // Prevent default behavior
-        event.preventDefault();
-
-        const data = new FormData(event.target);
-        // Access FormData fields with `data.get(fieldName)`
-        // For example, converting to upper case
-        data.set('username', data.get('username').toUpperCase());
-
-        // Do your Axios stuff here
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    handleSelect = (event) => {
+        let value = this.state.categories.filter(function(item) {
+            return   item.name === event.target.value
+        })
+        this.setState({[event.target.name]: value[0].id })
+        console.log(value[0].id)
     }
 
-    componentDidMount() {
-        //categories
-        const categories = []
-        this.setState({categories})
+    handleSubmit = () => {
+        let formData = new FormData();
+
+        formData.set('title', this.state.title);
+        formData.set('content', this.state.content)
+        formData.set('category_id', this.state.category_id)
+        console.log(this.state.title,this.state.category_id,this.state.content);
+        formData.forEach(element => console.log(element))
+
+        const headers = {
+            headers: {"token": "pj11daaQRz7zUIH56B9Z"}
+        }
+
+        axios.post('http://178.62.198.162/api/posts', formData, headers)
+            .then((response) => {
+                this.posts = response.data;
+                console.log(response.data);
+            })
+            .catch(() =>
+                alert("post doesnt work"))
+    }
 
 
+    componentDidMount() {//categories
         const headers = {
             headers: {"token": "pj11daaQRz7zUIH56B9Z"}
         }
@@ -56,7 +61,6 @@ class SocialBrothers extends React.Component {
                 console.log("er was een error")
                 console.error(error)
             })
-
         // articles
         axios.get('http://178.62.198.162/api/posts', headers)
             .then(response => this.setState({posts: response.data}))
@@ -64,12 +68,6 @@ class SocialBrothers extends React.Component {
 
 
     render() {
-        let categories = this.state.categories;
-        let optionItems = categories.map((categorie) =>
-            <option key={categorie.id}>{categorie.name}</option>
-        );
-
-
         return (
             <div>
 
@@ -80,24 +78,22 @@ class SocialBrothers extends React.Component {
                 <div className='page-container'>
 
                     {/*bericht maken*/}
-                    <form onSubmit={this.handleSubmit()} className='form-container'>
-                        <label className='form-label'>Berichtnaam</label>
-                        <input type='text' className='form-input' onChange={this.changeBerichtnaamHandler}
-                               value={this.state.berichtnaam}/>
-                        <label className='form-label'>Categorie</label>
+                    {/*title*/}
+                    <form onSubmit={this.handleSubmit} className='form-container'>
+                        <label htmlFor="title" className='form-label'>Berichtnaam</label>
+                        <input onChange={this.handleChange} name="title" type='text' className='form-input'/>
+                        {/* category_id*/}
+                        <label htmlFor="category_id" className='form-label'>Categorie</label>
 
-                        {/*<br/>*/}
-                        {/*<Select placeholder="Geen categorie" options={optionItems} onchange={this.changeCategorieHandler}/>*/}
-                        {/*<br/>*/}
+                        <select onChange={this.handleSelect} name="category_id"
+                                className="form-select">{
+                            this.state.categories.map((categorie) =>
+                                <option key={categorie.id}>{categorie.name}</option>
+                            )} </select>
 
-                        <select onChange={this.changeCategorieHandler} className="form-select">{optionItems} </select>
-
-
-                        <label className='form-label'>Bericht</label>
-                        <textarea className='form-textarea' onChange={this.changeBerichtHandler}
-                                  value={this.state.bericht}>
-
-                    </textarea>
+                        {/* content*/}
+                        <label htmlFor="content" className='form-label'>Bericht</label>
+                        <textarea onChange={this.handleChange} name="content" className='form-textarea'/>
 
                         <button className='form-button'>Bericht aanmaken</button>
 
@@ -115,7 +111,6 @@ class SocialBrothers extends React.Component {
                         {/*)}*/}
 
                         <button className='aside-button'>Meer laden</button>
-
 
                     </aside>
 
