@@ -1,7 +1,7 @@
 import './sb_stylesheet.css'
 import image from './header.jpg'
 import axios from 'axios';
-import React from "react";
+import React, {Fragment} from "react";
 
 class SocialBrothers extends React.Component {
 
@@ -13,6 +13,7 @@ class SocialBrothers extends React.Component {
             title: "",
             content: "",
             category_id: 1,
+
         }
     }
     handleChange = (event) => {
@@ -30,7 +31,6 @@ class SocialBrothers extends React.Component {
 
     handleSubmit = () => {
         let formData = new FormData();
-
         formData.set('title', this.state.title);
         formData.set('content', this.state.content)
         formData.set('category_id', this.state.category_id)
@@ -40,7 +40,6 @@ class SocialBrothers extends React.Component {
         const headers = {
             headers: {"token": "pj11daaQRz7zUIH56B9Z"}
         }
-
         axios.post('http://178.62.198.162/api/posts', formData, headers)
             .then((response) => {
                 this.posts = response.data;
@@ -49,6 +48,20 @@ class SocialBrothers extends React.Component {
             .catch(() =>
                 alert("post doesnt work"))
     }
+
+    getPosts = () => {
+        const data = this.state.posts;
+        return data.map((item, index) => (
+            <Fragment key={item.id}>
+                <li className="list-item-post">
+                    <img className="post-image" src={item.img_url} alt="foto"/>
+                    <h2 className="post-title">{item.title}</h2>
+                    <p className="post-content">{item.content}</p>
+                </li>
+            </Fragment>
+
+        ));
+    };
 
 
     componentDidMount() {//categories
@@ -64,9 +77,8 @@ class SocialBrothers extends React.Component {
         // articles
         axios.get('http://178.62.198.162/api/posts', headers)
             .then(response => this.setState({posts: response.data}))
+
     }
-
-
     render() {
         return (
             <div>
@@ -100,28 +112,18 @@ class SocialBrothers extends React.Component {
                     </form>
 
 
+
                     {/*articles*/}
                     <aside className='aside-container'>
-                        {/*{this.state.posts.length > 0 && (*/}
-                        {/*    <ul className="results">*/}
-                        {/*        {this.state.posts.map(function(post){*/}
-                        {/*        re <li>{post.title}</li>*/}
-                        {/*        ))}*/}
-                        {/*    </ul>*/}
-                        {/*)}*/}
+                        <ul className="list-posts">{this.getPosts()}</ul>
+
 
                         <button className='aside-button'>Meer laden</button>
-
                     </aside>
-
-
                 </div>
             </div>
         );
     }
-
-
 }
-
 
 export default SocialBrothers;

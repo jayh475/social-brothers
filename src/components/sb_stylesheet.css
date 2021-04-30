@@ -91,7 +91,6 @@
 }
 
 
-
 /*for the messages*/
 .aside-container {
     grid-area: aside;
@@ -101,6 +100,7 @@
     padding: 4vw;
 }
 
+/*aside */
 .aside-button {
     color: white;
     border-radius: 25px;
@@ -115,16 +115,44 @@
     margin:  20px auto auto;
 }
 
+.list-posts{
+    list-style-type:none;
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: repeat(2, 50%) ;
+    grid-template-rows: auto auto;
+    width: 100%;
+}
+
+.post-content{
+    color: #a5a5a5;
+}
+
+.post-image{
+    width: 50px;
+    height: 100px;
+}
+.list-item-post{
+
+    box-shadow: 5px 10px #f5f5f5;
+}
+.post-title{
+
+}
+
 /*mobile*/
 @media only screen and (max-width:450px) {
     .page-container {
-
         grid-template-columns: 100%;
         grid-template-rows: auto;
-
         grid-template-areas:
       "form"
-        "aside"
+      "aside"
+    }
+    .list-posts{
+        grid-template-columns: repeat(1, 100%) ;
+        width: 100%;
 
     }
+
 }
