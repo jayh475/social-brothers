@@ -11,7 +11,7 @@
       "form aside"
 }
 
-@media (max-width: 400px) {
+@media (min-width: 400px) {
     .grid {
         grid-template-areas:
       "form aside"
@@ -39,12 +39,6 @@
 
 
 }
-
-/*.form-input .form-select .form-textarea{*/
-/*    width: 100%;*/
-/*    background: #fafafa;*/
-/*    border: none;*/
-/*}*/
 
 .form-input {
     border: none;
@@ -83,7 +77,6 @@
     position: relative;
     border: solid;
     margin:  20px auto auto;
-
 }
 
 
@@ -131,14 +124,11 @@
 }
 .list-item-post{
     text-align: left;
-    box-shadow: 5px 10px #f5f5f5;
-}
-.post-title{
-
+    box-shadow:  10px 10px 5px 6px grey;
 }
 
 /*mobile*/
-@media only screen and (max-width:450px) {
+@media only screen and (max-width:1024px) {
     .page-container {
         grid-template-columns: 100%;
         grid-template-rows: auto;
@@ -150,6 +140,9 @@
         grid-template-columns: repeat(1, 80%) ;
         width: 100%;
     }
+
+
+
 
 
 }

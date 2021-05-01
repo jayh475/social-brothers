@@ -10,22 +10,24 @@ class SocialBrothers extends React.Component {
         this.state = {
             posts: [],
             categories: [],
+            posts_state:0,
             title: "",
             content: "",
             category_id: 1,
 
         }
     }
+
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
     handleSelect = (event) => {
-        let value = this.state.categories.filter(function(item) {
-            return   item.name === event.target.value
+        let value = this.state.categories.filter(function (item) {
+            return item.name === event.target.value
         })
-        this.setState({[event.target.name]: value[0].id })
+        this.setState({[event.target.name]: value[0].id})
     }
 
     handleSubmit = () => {
@@ -33,7 +35,7 @@ class SocialBrothers extends React.Component {
         formData.set('title', this.state.title);
         formData.set('content', this.state.content)
         formData.set('category_id', this.state.category_id)
-        console.log(this.state.title,this.state.category_id,this.state.content);
+        console.log(this.state.title, this.state.category_id, this.state.content);
         formData.forEach(element => console.log(element))
 
         const headers = {
@@ -45,22 +47,35 @@ class SocialBrothers extends React.Component {
                 console.log(response.data);
             })
             .catch(() =>
-                alert("post doesnt work"))
+                alert("Er is iets fout gegaan."))
     }
+
+    test = () => {
+        this.setState({"posts_state": 1})
+    }
+
+
     getPosts = () => {
-         const posts = this.state.posts.slice(0,4);
+        let posts;
+        if(this.state.posts_state === 1){
+            posts = this.state.posts
+        }else{
+           posts =  this.state.posts.slice(0, 4)
+        }
         return posts.map((item, index) => (
             <Fragment key={item.id}>
                 <li className="list-item-post">
                     <img className="post-image" src={item.img_url} alt="foto"/>
-                    <h2 className="post-title">{item.title}</h2>
+                    <h2>{item.title}</h2>
                     <p className="post-content">{item.content}</p>
                 </li>
             </Fragment>
 
         ));
     };
-    componentDidMount() {//categories
+
+    componentDidMount() {
+        //categories
         const headers = {
             headers: {"token": "pj11daaQRz7zUIH56B9Z"}
         }
@@ -74,13 +89,16 @@ class SocialBrothers extends React.Component {
         axios.get('http://178.62.198.162/api/posts', headers)
             .then(response => this.setState({posts: response.data}))
     }
+
     render() {
         return (
             <div>
 
                 {/*header*/}
                 <img className='header-image' alt={"foto"} src={image}/>
+
                 <div className='page-container'>
+                    {/*form*/}
                     <form onSubmit={this.handleSubmit} className='form-container'>
                         <label htmlFor="title" className='form-label'>Berichtnaam</label>
                         <input onChange={this.handleChange} name="title" type='text' className='form-input'/>
@@ -91,18 +109,21 @@ class SocialBrothers extends React.Component {
                                 <option key={categorie.id}>{categorie.name}</option>
                             )} </select>
                         <label htmlFor="content" className='form-label'>Bericht</label>
-                        <textarea onChange={this.handleChange} name="content" className='form-textarea'/>
+                        <textarea maxLength="255" onChange={this.handleChange} name="content"
+                                  className='form-textarea'/>
 
                         <button className='form-button'>Bericht aanmaken</button>
                     </form>
+
                     {/*articles*/}
                     <aside className='aside-container'>
                         <ul className="list-posts">{this.getPosts()}</ul>
-                        <button className='aside-button'>Meer laden</button>
+                        <button onClick={this.test} name="aside-button" className='aside-button'>meer laden</button>
                     </aside>
                 </div>
             </div>
         );
     }
 }
+
 export default SocialBrothers;
