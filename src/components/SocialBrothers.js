@@ -10,7 +10,7 @@ class SocialBrothers extends React.Component {
         this.state = {
             posts: [],
             categories: [],
-            posts_state:0,
+            posts_state:false,
             title: "",
             content: "",
             category_id: 1,
@@ -51,13 +51,18 @@ class SocialBrothers extends React.Component {
     }
 
     test = () => {
-        this.setState({"posts_state": 1})
+        if(this.state.posts_state){
+            this.setState({"posts_state": false})
+        }
+        else{
+            this.setState({"posts_state": true})
+        }
     }
 
 
     getPosts = () => {
         let posts;
-        if(this.state.posts_state === 1){
+        if(this.state.posts_state){
             posts = this.state.posts
         }else{
            posts =  this.state.posts.slice(0, 4)
@@ -118,7 +123,7 @@ class SocialBrothers extends React.Component {
                     {/*articles*/}
                     <aside className='aside-container'>
                         <ul className="list-posts">{this.getPosts()}</ul>
-                        <button onClick={this.test} name="aside-button" className='aside-button'>meer laden</button>
+                        <button onClick={this.test} name="aside-button" className='aside-button'>{this.state.posts_state ?  "Minder laden" : "Meer laden"}</button>
                     </aside>
                 </div>
             </div>
