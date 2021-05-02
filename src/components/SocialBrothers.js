@@ -67,7 +67,7 @@ class SocialBrothers extends React.Component {
         }else{
            posts =  this.state.posts.slice(0, 4)
         }
-        return posts.map((item, index) => (
+        return posts.map((item) => (
             <Fragment key={item.id}>
                 <li className="list-item-post">
                     <img className="post-image" src={item.img_url} alt="foto"/>
